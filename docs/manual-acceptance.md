@@ -1,7 +1,7 @@
 # 人工验收单
 
 自动化部分已经覆盖：`npm run check`（typecheck + eslint 门禁 + 44 个 Vitest 用例 + 三目标构建）。
-下面这些是**只有真机 GUI 才能验**的项，请逐条打勾。启动方式：`npm run dev`，或直接双击 `release\工作计划 0.1.0.exe`。
+下面这些是**只有真机 GUI 才能验**的项，请逐条打勾。启动方式：`npm run dev`，或直接双击 `release\workplan-win-x64.exe`。
 
 ## 1. 启动与数据
 
@@ -136,7 +136,7 @@
 
 ## 13. 交付形态
 
-- [ ] `工作计划 0.1.0.exe` 双击即用，**不弹 UAC**
+- [ ] `workplan-win-x64.exe` 双击即用，**不弹 UAC**
 - [ ] 未签名首次运行会有 SmartScreen 提示（属预期），点「仍要运行」能起来
 - [ ] portable 首启比绿色版慢一点（解包到临时目录），后续启动恢复正常
 

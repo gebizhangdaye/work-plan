@@ -23,7 +23,7 @@
 npm install          # 已配 npmmirror；缺 electron 二进制时 postinstall 自动走镜像补
 npm run dev          # 开发（带热更新）
 npm run check        # typecheck + lint + vitest + 三段构建
-npm run dist         # 产出 release\工作计划 0.1.0.exe（免安装 portable）
+npm run dist         # 产出 release\workplan-win-x64.exe（免安装 portable）
 ```
 
 ```bash
@@ -34,7 +34,7 @@ npm run dist:mac:arm64   # Apple Silicon；Intel 用 dist:mac:x64，两个都要
 
 零原生模块（存储是 Electron 内置 `node:sqlite`），所以换平台不需要 node-gyp、不需要 `@electron/rebuild`。`icon.icns` 与 `trayTemplate*.png` 由 `npm run icons` 现生成，不走 electron-builder 那套要从 GitHub 下载的图标 toolset。macOS 产物是 ad-hoc 签名、**未公证**，首次打开会被 Gatekeeper 拦，放行办法写在 `docs/manual-acceptance.md` §14。
 
-双击 `release\工作计划 0.1.0.exe` 即可用，不需要管理员权限。未签名，首次运行 Windows 可能弹 SmartScreen「仍要运行」。
+双击 `release\workplan-win-x64.exe` 即可用，不需要管理员权限。未签名，首次运行 Windows 可能弹 SmartScreen「仍要运行」。
 
 ## 数据在哪
 

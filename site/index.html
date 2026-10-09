@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作计划 · 摊在三条泳道上的本地待办板</title>
+<meta name="description" content="Windows 桌面工作计划应用：加急 / 今天 / 以后三档泳道，计划日与逾期高亮，微信 QQ 截图直接粘贴并局部裁剪，全文搜索、标签过滤、导出 md/csv，可置顶小窗。数据全在本地，不联网、无账号。">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1b">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="media/logo.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="masthead">
+  <a class="brand" href="./"><img src="media/logo.png" alt="" width="22" height="22" aria-hidden="true">工作计划</a>
+  <nav aria-label="主导航">
+    <a href="#lanes">三档泳道</a>
+    <a href="#shots">聊天截图</a>
+    <a href="#mini">置顶小窗</a>
+    <a href="#data">数据在哪</a>
+    <a href="docs.html">使用教程</a>
+    <a class="pill" href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe" download>下载</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Windows 桌面应用 · 完全离线</p>
+    <h1>把一天要干的事，摊在三条泳道上</h1>
+    <p class="lead">
+      加急、今天、以后——一眼看出什么必须现在做、什么可以排后。
+      文字记不下就把微信、QQ 的聊天截图直接 <code>Ctrl+V</code> 贴进来，
+      事情和它的证据待在同一条记录里。
+    </p>
+    <div class="cta-row">
+      <a class="pill" href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe" download>下载免安装版</a>
+      <a class="pill ghost" href="docs.html">看使用教程</a>
+      <p class="cta-meta">v0.1.0 · 约 97 MB · Win10 / 11 x64</p>
+    </div>
+    <ul class="facts">
+      <li>不需要安装，双击即用</li>
+      <li>不注册、不登录、不联网</li>
+      <li>数据就是一个本地文件夹</li>
+      <li>明暗跟随系统</li>
+    </ul>
+  </div>
+
+  <figure>
+    <div class="shot">
+      <img src="media/board.png" alt="工作计划主界面：加急、今天、以后三条泳道，卡片上有逾期标记、标签和聊天截图缩略图" width="1320" height="860" fetchpriority="high">
+      <span class="mark" aria-hidden="true" style="left:7%;top:2.6%">1</span>
+      <span class="mark" aria-hidden="true" style="left:30%;top:7.2%">2</span>
+      <span class="mark" aria-hidden="true" style="left:2%;top:12.4%">3</span>
+      <span class="mark" aria-hidden="true" style="left:5%;top:18.6%">4</span>
+      <span class="mark lane-a" aria-hidden="true" style="left:5.6%;top:32.2%">5</span>
+      <span class="mark lane-b" aria-hidden="true" style="left:39%;top:37%">6</span>
+    </div>
+    <ol class="legend">
+      <li><b>1</b>自定义标题栏：菜单条、视图切换、检索、设置都在窗口里，不占系统标题栏</li>
+      <li><b>2</b>检索框：空格分词，命中范围是标题 / 正文 / 标签名</li>
+      <li><b>3</b>标签 chips：多点为 AND 过滤，尾巴那个数字是挂了它的条目数</li>
+      <li><b>4</b>三条泳道：列头带档位色与计数，列内可拖拽排序</li>
+      <li><b class="lane-a">5</b>逾期：计划日过了还没勾掉，标红并顶到本列最前</li>
+      <li><b class="lane-b">6</b>聊天截图缩略图：点开看大图，还能就地裁一块</li>
+    </ol>
+  </figure>
+</section>
+
+<section id="lanes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">01</span>
+      <h2>三档，不是优先级列表</h2>
+      <p>「高 / 中 / 低」最后都会变成一堆「高」。三档泳道逼的是另一个问题：这件事是现在必须处理、今天之内，还是可以推以后。</p>
+    </div>
+    <ul class="rules">
+      <li><i aria-hidden="true" style="background:var(--urgent)"></i><div><b>加急</b><span>红色列头。逾期计数直接写在列头上，红了几个一眼看到；这一档的条目永远排在最前，不会被折叠或分页藏起来。</span></div></li>
+      <li><i aria-hidden="true" style="background:var(--today)"></i><div><b>今天</b><span>蓝色列头。计划日填到「天」就够，不用排时间块；到期没做自动变逾期，做了就沉到本列底部，按完成时间倒序。</span></div></li>
+      <li><i aria-hidden="true" style="background:var(--later)"></i><div><b>以后</b><span>灰色列头。想法、待办、别人的请求先落在这里，不占今天的注意力。拖到别的列就改档，不用打开编辑框。</span></div></li>
+    </ul>
+    <div class="split">
+      <div>
+        <h3>拖动就是改档，也是排序</h3>
+        <p>列内上下拖动调整顺序，跨列拖动直接换档；不想动鼠标就点卡片右下角的 <code>→ 以后</code> 循环切档。排序用间隙编号，只写被拖的那一条，不会牵动整列。</p>
+        <p>计划日永远不会把你的条目藏起来——这一点是刻意的：过滤器只帮你少看，不替你决定什么不算数。</p>
+      </div>
+      <figure>
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/board-dark.png" alt="深色模式下的三条泳道，逾期条目排在加急列最前" width="1320" height="860">
+        </div>
+        <figcaption>深色模式跟随系统自动翻转，不会半深半浅。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="shots">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">02</span>
+      <h2>聊天截图是一等公民</h2>
+      <p>需求是微信里说的，口径是群里定的。把它们另存到别处、回头再找文件名，这条待办就已经废了。</p>
+    </div>
+
+    <div class="split">
+      <div>
+        <h3>截图 → <code>Ctrl+V</code>，不用切换模式</h3>
+        <ul>
+          <li>剪贴板里是图，就落盘成附件；是文字，就照常当正文输入。</li>
+          <li>也可以把图片文件直接拖进来，原文件不被移动、不被改名。</li>
+          <li>同一张图重复粘贴只存一份（按内容哈希去重），跨条目共享同一份文件。</li>
+          <li>长边超过 2000 像素自动缩放，微信 4K 截图也不会把磁盘吃掉。</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/detail.png" alt="卡片详情抽屉：标题、计划日、档位、记录、标签与截图墙" width="1320" height="860">
+        </div>
+        <figcaption>卡片详情：元信息、正文、标签、截图墙和更新时间，五个分区都在同一层就地改。</figcaption>
+      </figure>
+    </div>
+
+    <div class="split flip">
+      <div>
+        <h3>看大图，顺手裁一块</h3>
+        <p>点缩略图进灯箱，「裁剪这一块」框选你要留的段落，滚轮或滑杆调放大倍率，「存为新截图」——<strong>原图那张还在</strong>，裁出来的是一条新附件，并记着自己是从哪张图裁的。</p>
+        <p>于是「只关心那两行对话」这件事，不需要打开任何图片编辑器。</p>
+      </div>
+      <div class="pair">
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/lightbox.png" alt="灯箱里的聊天截图大图与底部操作条" width="1320" height="860">
+          </div>
+          <figcaption>灯箱：底部带标题、原图尺寸与「所在文件夹」。</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/crop.png" alt="灯箱内的裁剪状态：网格选区、放大滑杆与存为新截图按钮" width="1320" height="860">
+          </div>
+          <figcaption>裁剪：网格选区 + 放大滑杆 + 「存为新截图」。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mini">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">03</span>
+      <h2>把它钉在屏幕右上角</h2>
+      <p>看板适合规划，小窗适合一直看得见。顶栏点「小窗」，主窗隐藏，换成一个 420×560 的置顶无边框窗口：别的窗口盖不住它，也不占任务栏。</p>
+    </div>
+    <div class="split">
+      <div>
+        <ul>
+          <li>三条泳道合并成<strong>一条列表</strong>，顺序仍是加急 → 今天 → 以后，用左侧色条和小色块区分档位。</li>
+          <li>默认只显示内容条：标题、三档计数、搜索框、视图切换全部收起，鼠标移入才展开，移出再收起。</li>
+          <li>勾一下就完成；点文字回到三列看板并自动打开这条详情，数据当场重拉。</li>
+          <li>想挪位置就抓顶边那条窄把手；顶栏的「小窗」和这里的「看板」是同一个分段控件。</li>
+        </ul>
+      </div>
+      <div class="pair">
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/mini-rest.png" alt="小窗默认状态，只显示内容条" width="840" height="1120">
+          </div>
+          <figcaption>默认：只有内容条。</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/mini.png" alt="鼠标移入后的小窗，展开标题、三档计数、搜索框和视图切换" width="840" height="1120">
+          </div>
+          <figcaption>移入：标题、逾期计数、检索、视图切换展开。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="organize">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">04</span>
+      <h2>找得到，也带得走</h2>
+      <p>中文全文检索、标签 AND 过滤、导出成 md 或 csv。没有云同步，因为你的数据本来就在一个文件夹里。</p>
+    </div>
+    <div class="split">
+      <div>
+        <h3>检索与整理</h3>
+        <ul>
+          <li>空格分词的与匹配：「导出 csv」= 两个词都命中才显示，范围含标题、正文、标签名。</li>
+          <li>标签在详情里输入名字回车即建即挂，顶栏第二行出现带计数的 chips。</li>
+          <li>菜单条长在标题栏上：文件 / 编辑 / 视图 / 帮助，项右侧直接标着快捷键。</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/menu.png" alt="标题栏菜单展开视图分组，含重新加载、缩放、开发者工具与快捷键" width="1320" height="860">
+        </div>
+        <figcaption>「视图」展开：重新加载、缩放、开发者工具、全屏。</figcaption>
+      </figure>
+    </div>
+    <div class="split flip">
+      <div>
+        <h3>设置与导出</h3>
+        <p>齿轮打开一个居中弹窗，左侧菜单分三区：<strong>导出</strong>（Markdown / CSV）、<strong>数据与运行</strong>（目录、条数、体积、开机自启）、<strong>关于</strong>（版本与退出）。</p>
+        <ul>
+          <li>Markdown：三档分节、完成项打勾、正文缩进、截图按相对路径引用，直接进仓库或周报。</li>
+          <li>CSV：带 BOM，Excel 打开中文不乱码；逗号、换行、引号按 RFC 4180 转义。</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/settings.png" alt="设置弹窗，左侧菜单分区导出、数据与运行、关于" width="1320" height="860">
+        </div>
+        <figcaption>设置是一个弹窗，左侧菜单分三区。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">05</span>
+      <h2>你的数据就是一个文件夹</h2>
+      <p>没有账号，没有服务端，没有遥测。整个应用不发起任何网络请求；关掉网线也照常工作。</p>
+    </div>
+    <div class="split">
+      <div>
+        <pre>work-plan\
+  workplan.db
+  attachments\
+    2026\10\a41f9c27.png
+  backups\
+    workplan-20261008-092000.db</pre>
+        <p style="margin-top:18px">位置固定在 <code>%APPDATA%\work-plan</code>。拷走这个文件夹就是迁移，删掉就是清空；想恢复，把 <code>backups\</code> 里任意一份复制成 <code>workplan.db</code> 覆盖即可。</p>
+        <p>存储用的是 Electron 内置的 SQLite，<strong>零原生模块</strong>：不需要装 Visual Studio Build Tools，也不需要 node-gyp。</p>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">文件</th>
+              <th scope="col">作用</th>
+            </tr>
+          </thead>
+          <tr><td><code>workplan.db</code></td><td>一个文件存下所有条目、标签、附件索引与排序号</td></tr>
+          <tr><td><code>attachments\YYYY\MM\*.png</code></td><td>截图按年月落盘，库里只存相对路径</td></tr>
+          <tr><td><code>backups\workplan-*.db</code></td><td>每次启动先做完整性检查再备份，只保留最近 5 份</td></tr>
+          <tr><td><code>工作计划-*.md / .csv</code></td><td>导出的默认落点</td></tr>
+        </table>
+        <h3 style="margin-top:26px">系统要求</h3>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">项目</th>
+              <th scope="col">说明</th>
+            </tr>
+          </thead>
+          <tr><td>系统</td><td>Windows 10 / 11，x64</td></tr>
+          <tr><td>安装</td><td>免安装 portable，双击即用，不弹 UAC</td></tr>
+          <tr><td>体积</td><td>约 97 MB</td></tr>
+          <tr><td>运行时</td><td>自带，无需另装 Node 或 VC++ 运行库</td></tr>
+          <tr><td>网络</td><td>不需要</td></tr>
+        </table>
+        <div class="note">
+          <b>首次运行</b>
+          未签名的 exe 首次打开会有 SmartScreen 提示，点「仍要运行」即可；portable 版第一次启动会解包到临时目录，比后续启动慢几秒。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">06</span>
+      <h2>一分钟走完一遍</h2>
+      <p>记一条 → 判档 → 贴聊天截图 → 裁一块 → 切小窗钉在右上角 → 导出 md。</p>
+    </div>
+    <div class="player">
+      <div class="frame" data-video="media/walkthrough.mp4" data-poster="media/board.png">
+        <img loading="lazy" decoding="async" src="media/board.png" alt="三列看板首屏：加急、今天、以后三条泳道，卡片上带标签与截图缩略图" width="1320" height="860">
+      </div>
+      <p class="missing">演示视频准备中：把录屏保存为 <code>site/media/walkthrough.mp4</code>，刷新后这里自动换成播放器。</p>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="no">07</span>
+      <h2>下载 v0.1.0</h2>
+      <p>单个 exe，双击即用。数据留在你自己的机器上。</p>
+    </div>
+    <div class="cta-row">
+      <a class="pill" href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe" download>下载免安装版（约 97 MB）</a>
+      <a class="pill ghost" href="docs.html">使用教程</a>
+    </div>
+    <h3 style="margin-top:38px">更新日志</h3>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">版本</th>
+          <th scope="col">内容</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>v0.1.0</td>
+        <td>三档泳道与拖拽改档、计划日与逾期高亮、聊天截图粘贴与局部裁剪、标签与中文全文检索、导出 md / csv、置顶小窗模式、自定义标题栏与菜单条、启动自动备份、托盘与开机自启。</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <span>工作计划 v0.1.0 · 纯本地离线，数据在 <code>%APPDATA%\work-plan</code></span>
+  <nav aria-label="页脚">
+    <a href="docs.html">使用教程</a>
+    <a href="#data">数据与隐私</a>
+    <a href="#download">下载</a>
+  </nav>
+  <span>© zt178</span>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

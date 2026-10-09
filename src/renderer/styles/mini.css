@@ -1,0 +1,209 @@
+/* 小窗：独立无边框窗口，默认只有内容条；鼠标进入即展开工具层，移出收起 */
+.mini {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+  outline: 1px solid var(--border);
+  user-select: none;
+}
+
+/*
+ * 拖窗把手必须是几何恒定的静态条，且只此一处，压在顶边（拖动窗口的第一直觉位置）。
+ * 挂在 .mini 根上时整窗都是 drag，mousemove 被系统拖拽判定吃掉，:hover 只在指针
+ * 压到 no-drag 元素那一刻才刷新——展开时机就飘在鼠标移动途中（真机 A/B：指针停在
+ * 列表空白 640ms 不展开，移到行上立刻展开），配上 112px 的布局位移就是用户看到的抖动。
+ */
+.mini-grab {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 12px;
+  -webkit-app-region: drag;
+}
+
+.mini-chrome {
+  display: grid;
+  grid-template-rows: 0fr;
+  flex: none;
+  opacity: 0;
+  transition: grid-template-rows var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+
+.mini:hover .mini-chrome,
+.mini:focus-within .mini-chrome {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.mini-chrome-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 顶部让开 .mini-grab 那 12px：分段按钮整个落在 drag 区之外，点按钮不会误拖窗口 */
+.mini-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  height: 48px;
+  padding: 12px 6px 0 var(--gap-3);
+}
+
+.mini-head strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mini-date {
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.mini-head .spacer {
+  flex: 1;
+}
+
+.mini-tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex: none;
+  padding: 0 var(--gap-3) var(--gap-2);
+}
+
+.tally-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.tally-chip .lane-mark {
+  width: 8px;
+  height: 8px;
+}
+
+.tally-chip .overdue-tag {
+  font-style: normal;
+  color: var(--urgent);
+  font-weight: 600;
+}
+
+.mini .search,
+.mini-search {
+  flex: none;
+  align-self: stretch;
+  width: auto;
+  min-width: 0;
+  margin: 0 var(--gap-3) var(--gap-2);
+}
+
+.mini-list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  /* 上边距 12px 与 .mini-grab 等高：首行永远不被把手压住，顶边整条都能起手拖窗 */
+  padding: var(--gap-3) var(--gap-3) var(--gap-4);
+  overflow: auto;
+  /* 工具层展开后列表可视高度少 112px，条目数刚好卡在这个区间时会中途冒出滚动条，
+     整行瞬间窄 15px（离屏实测 deltaRowWidth: -15px）。滚动条槽常留，宽度就不会跳。 */
+  scrollbar-gutter: stable;
+  list-style: none;
+}
+
+.mini-row {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: start;
+  gap: 7px;
+  padding: 7px var(--gap-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--lane-color);
+  border-radius: var(--radius-control);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.mini-row:hover {
+  border-color: var(--border-strong);
+  border-left-color: var(--lane-color);
+  box-shadow: var(--shadow-2);
+}
+
+.mini-row.done {
+  background: var(--surface-2);
+  border-color: var(--border);
+  border-left-color: var(--lane-color);
+}
+
+.mini-row.done .mini-title {
+  color: var(--text-3);
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+.lane-block {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 2px;
+  background: var(--lane-color);
+}
+
+.mini-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mini-title {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.mini-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-2);
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.mini-empty {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin: auto;
+  padding: var(--gap-4);
+  color: var(--text-3);
+  text-align: center;
+  font-size: 12.5px;
+}
+
+.mini-empty svg {
+  opacity: 0.5;
+}

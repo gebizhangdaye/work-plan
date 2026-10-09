@@ -1,0 +1,45 @@
+{
+  "name": "work-plan",
+  "productName": "工作计划",
+  "version": "0.1.0",
+  "description": "本地工作计划看板：加急/今天/以后三档泳道，支持文字记录与聊天截图粘贴（Windows portable / macOS dmg+zip）",
+  "main": "out/main/index.js",
+  "author": "zt178",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/ensureElectronBinary.mjs",
+    "icons": "node scripts/makeIcons.mjs",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "dist": "electron-vite build && electron-builder --win portable",
+    "dist:mac": "electron-vite build && electron-builder --mac",
+    "dist:mac:arm64": "electron-vite build && electron-builder --mac --arm64",
+    "dist:mac:x64": "electron-vite build && electron-builder --mac --x64",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-easy-crop": "6.2.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "eslint": "10.12.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "7.3.7",
+    "vitest": "5.0.3"
+  }
+}

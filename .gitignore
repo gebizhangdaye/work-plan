@@ -1,0 +1,15 @@
+node_modules/
+out/
+dist/
+release/
+*.log
+*.db
+*.db-wal
+*.db-shm
+.idea/
+.vscode/
+
+# 安装包不入库：GitHub 单文件 >50 MB 告警、>100 MB 直接拒推，产物走 Releases
+site/download/
+.env
+.DS_Store

@@ -1,0 +1,63 @@
+appId: com.zt178.workplan
+productName: 工作计划
+copyright: zt178
+
+directories:
+  output: release
+  buildResources: resources
+
+files:
+  - out/**
+
+# 打包后托盘图标要能从 process.resourcesPath 读到
+extraResources:
+  - from: resources/tray.png
+    to: tray.png
+  # macOS 菜单栏模板图（系统按明暗上色），@2x 由 trayImage.ts 显式挂 representation
+  - from: resources/trayTemplate.png
+    to: trayTemplate.png
+  - from: resources/trayTemplate@2x.png
+    to: trayTemplate@2x.png
+
+win:
+  target:
+    - portable
+  icon: resources/icon.ico
+  # requestExecutionLevel 是 nsis 的选项，portable 没有这个键；portable 默认 asInvoker，不弹 UAC
+
+# 只在 Mac 上出包：dmg 要 hdiutil、pkg 要 productbuild、签名要 codesign，这三样只有 macOS 有。
+# Windows 主机跑 --mac 会被 macCodeSign 以 "skipped macOS application code signing" 跳过签名，
+# 顶多拼出未签名的 .app 目录，装到别的机器上也开不了。
+mac:
+  # ad-hoc 签名：不买开发者账号也不公证。Apple Silicon 上内核要求每个 Mach-O 都有有效签名，
+  # 所以不能整个跳过（identity: null），电子签一份 ad-hoc 才起得来。
+  identity: '-'
+  # 非 MAS 构建默认 hardenedRuntime=true，而 ad-hoc + 硬化运行时要配
+  # com.apple.security.cs.disable-library-validation 才不挡动态库，直接关掉省事。
+  hardenedRuntime: false
+  category: public.app-category.productivity
+  # 只改主可执行文件和 .app 的名字；helper 仍带 productName（electronMac 用的是
+  # sanitizedProductName），所以包里还是会出现「工作计划 Helper (Renderer).app」。
+  # CJK 不阻塞构建：MacTargetHelper 的 assertSafePathForCommandUsage 只拦 / \0 \r \n " ' ` $ ; & | < >
+  executableName: work-plan
+  # 直接给现成的 .icns：iconConverter 对已是目标扩展名的文件原样返回，既不校验尺寸
+  # （512px 那条硬门槛就不适用了），也不用去 GitHub 下 icons toolset。
+  # 别改成 .icon 格式 —— 那条路要 spawn Xcode 的 actool。
+  icon: resources/icon.icns
+  target:
+    - dmg
+    - zip
+  # 文件名保持 ASCII 且不带版本号：Releases 的 releases/latest/download/<名字> 是稳定直链，
+  # 带 ${version} 的话每发一版都得回来改官网按钮的 href。
+  artifactName: workplan-mac-${arch}.${ext}
+
+portable:
+  artifactName: workplan-win-${arch}.exe
+  unpackDirName: workplan-portable
+  unicode: true
+
+electronDownload:
+  mirror: https://npmmirror.com/mirrors/electron/
+
+asar: true
+compression: maximum

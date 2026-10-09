@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使用教程 · 工作计划</title>
+<meta name="description" content="工作计划桌面应用的完整使用教程：三档泳道、计划日与逾期、聊天截图粘贴与局部裁剪、检索与标签、导出 md/csv、置顶小窗、数据备份与迁移、快捷键。">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1b">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="media/logo.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="masthead">
+  <a class="brand" href="./"><img src="media/logo.png" alt="" width="22" height="22" aria-hidden="true">工作计划</a>
+  <nav aria-label="主导航">
+    <a href="index.html#lanes">三档泳道</a>
+    <a href="index.html#shots">聊天截图</a>
+    <a href="index.html#mini">置顶小窗</a>
+    <a href="index.html#data">数据在哪</a>
+    <a href="docs.html" aria-current="page">使用教程</a>
+    <a class="pill" href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe" download>下载</a>
+  </nav>
+  <div class="read-progress" aria-hidden="true"></div>
+</header>
+
+<div class="doc">
+
+  <aside class="doc-rail">
+    <input class="filter" id="docFilter" type="search" placeholder="过滤目录" aria-label="过滤目录">
+    <nav id="docNav" aria-label="文档目录">
+      <h2 class="grp">入门</h2>
+      <a href="#intro">它是什么，怎么想这件事</a>
+      <a href="#install">安装与首次启动</a>
+      <a href="#tour">界面导览</a>
+      <h2 class="grp">核心操作</h2>
+      <a href="#create">记一条与勾完成</a>
+      <a href="#lanes">三档与拖拽排序</a>
+      <a href="#dates">计划日与逾期</a>
+      <h2 class="grp">聊天截图</h2>
+      <a href="#paste">粘贴与拖入截图</a>
+      <a href="#crop">灯箱与局部裁剪</a>
+      <h2 class="grp">检索与整理</h2>
+      <a href="#search">全文检索</a>
+      <a href="#tags">标签与项目分类</a>
+      <a href="#export">导出 Markdown / CSV</a>
+      <h2 class="grp">界面与效率</h2>
+      <a href="#mini">置顶小窗模式</a>
+      <a href="#menu">菜单条与快捷键</a>
+      <a href="#theme">明暗主题与托盘</a>
+      <h2 class="grp">数据与排错</h2>
+      <a href="#data">数据位置、备份与迁移</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main" id="main" tabindex="-1">
+
+    <h1 class="sr-only">工作计划 · 使用教程</h1>
+
+    <article class="doc-chapter" id="intro">
+      <h2>它是什么，怎么想这件事</h2>
+      <p>工作计划是一个 <strong>Windows 桌面待办板</strong>：三条泳道（加急 / 今天 / 以后）、能记文字、能直接贴聊天截图，数据全部留在你自己的机器上。没有账号、没有云同步、没有遥测，断网也照常工作。</p>
+      <p>它刻意只做三档，不做「高 / 中 / 低」，也不做时间块。因为待办工具最容易坏在两个地方：优先级通胀（最后全是「高」），以及记录成本高于收益（截图要另存、要起名、要找回来）。所以这里的规则很少：</p>
+      <ul>
+        <li><strong>档位回答「什么时候必须动它」</strong>，不回答「它有多重要」。</li>
+        <li><strong>截图和文字同属一条记录</strong>，需求是微信里说的，就让它以微信截图的形式待着。</li>
+        <li><strong>过滤器只帮你少看，不替你决定什么不算数</strong>：计划日过期了条目照样显示，只是标红并排到最前。</li>
+      </ul>
+      <div class="note"><b>适合谁</b>事情多到需要一直看得见、又常常「证据在聊天记录里」的人。需要甘特图、需要多人协作的场景，它不是为这个设计的。</div>
+    </article>
+
+    <article class="doc-chapter" id="install">
+      <h2>安装与首次启动</h2>
+      <ol class="steps">
+        <li>下载 <code>工作计划 0.1.0.exe</code>（免安装 portable，约 97 MB），放到任意目录。</li>
+        <li>双击运行。未签名的 exe 首次启动会出现 SmartScreen 提示，点「仍要运行」。</li>
+        <li>第一次启动会把自己解包到临时目录，比后续启动慢几秒，属正常。</li>
+        <li>窗口打开后即可使用；数据目录 <code>%APPDATA%\work-plan</code> 会在首次启动时自动创建。</li>
+      </ol>
+      <p>想开机自动运行：打开 <strong>设置 → 数据与运行</strong>，勾选「开机自启」。</p>
+      <div class="note warn"><b>换存放位置要注意</b>免安装版把「开机自启」指向 exe 的当前路径。移动或改名之后自启会失效，重新勾一次即可。</div>
+      <h3>系统要求</h3>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">项目</th>
+            <th scope="col">说明</th>
+          </tr>
+        </thead>
+        <tr><td>系统</td><td>Windows 10 / 11，x64</td></tr>
+        <tr><td>运行时</td><td>自带，无需另装 Node 或 VC++ 运行库</td></tr>
+        <tr><td>权限</td><td>普通用户即可，不弹 UAC</td></tr>
+        <tr><td>网络</td><td>不需要</td></tr>
+      </table>
+    </article>
+
+    <article class="doc-chapter" id="tour">
+      <h2>界面导览</h2>
+      <p>窗口从上到下分四层，每层职责单一：</p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">区域</th>
+            <th scope="col">里面有什么</th>
+          </tr>
+        </thead>
+        <tr><td>标题栏</td><td>logo 与应用名、今天日期、<strong>文件 / 编辑 / 视图 / 帮助</strong>菜单条，右侧是最小化、最大化还原、关闭到托盘</td></tr>
+        <tr><td>操作栏</td><td>检索框、<strong>看板 / 小窗</strong>视图切换、设置齿轮</td></tr>
+        <tr><td>标签行</td><td>只在已有标签时出现：过滤按钮 + 各标签 chips，chip 尾巴的数字是挂了它的条目数（含已完成），多点为 AND</td></tr>
+        <tr><td>看板</td><td>三条泳道，列头带档位色与计数，列底是「记一条，回车入库」</td></tr>
+      </table>
+      <p>点任意卡片，右侧滑出<strong>详情抽屉</strong>：标题、元信息（计划日与档位并排）、记录、标签、截图墙，底部是保存 / 删除与最近更新时间。抽屉里改档位是就地改，不用回到列上拖。</p>
+      <figure style="margin-top:22px">
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/detail.png" alt="详情抽屉的分区结构" width="1320" height="860">
+        </div>
+        <figcaption>详情抽屉：标题 / 元信息 / 记录 / 标签 / 截图，五个分区都能就地编辑。</figcaption>
+      </figure>
+    </article>
+
+    <article class="doc-chapter" id="create">
+      <h2>记一条与勾完成</h2>
+      <ol class="steps">
+        <li>点进目标列底部的输入框（想记到「加急」就点加急列的框）。</li>
+        <li>写完直接回车，条目立即入库并留在该列。</li>
+        <li>要补上下文：点开这张卡片，在「记录」框里写正文。</li>
+        <li>做完了：点卡片左侧的复选框。条目变灰划线，沉到本列底部，按完成时间倒序排列。</li>
+        <li>再点一次复选框可以撤回未完成状态。</li>
+      </ol>
+      <div class="note"><b>快速框只收标题</b>它是单行输入，回车即入库。正文、计划日、标签、截图都在卡片详情里补——先记下来比记完整更重要。</div>
+      <h3>删除一条</h3>
+      <p>点开卡片 → 详情抽屉底部「删除」。删除条目时，它独占的截图文件会按引用计数回收；被别的条目共用的那张不会被删。</p>
+    </article>
+
+    <article class="doc-chapter" id="lanes">
+      <h2>三档与拖拽排序</h2>
+      <p>三条泳道固定为 <strong>加急 / 今天 / 以后</strong>，顺序恒为加急 → 今天 → 以后。</p>
+      <ul>
+        <li><strong>列内排序</strong>：在同一列里上下拖动卡片，松手位置即新顺序。</li>
+        <li><strong>跨列改档</strong>：把卡片拖到另一列，档位随之改变，落点决定它在目标列里的位置。</li>
+        <li><strong>不想拖</strong>：点卡片右下角的 <code>→ 以后</code> 按钮，按 加急 → 今天 → 以后 循环切档；或在详情抽屉里直接点三个档位按钮。</li>
+      </ul>
+      <p>排序用间隙编号存储，拖动只写它自己那一条；当编号间隙被反复插入耗尽时，整列会自动归一化重排一次。</p>
+      <div class="note"><b>筛选状态下的拖拽</b>列表被检索或标签过滤过也能拖。落点按「它前面那条卡片」定位，所以即使中间藏着被过滤掉的条目，顺序也不会算错。</div>
+    </article>
+
+    <article class="doc-chapter" id="dates">
+      <h2>计划日与逾期</h2>
+      <ol class="steps">
+        <li>点开卡片，在「元信息」里选计划日——粒度到「天」，不用排时间块。</li>
+        <li>日期控件是系统原生的中文日历，格式显示为 年/月/日。</li>
+        <li>没想好就留空：留空的条目永远不会被判成逾期。</li>
+      </ol>
+      <p>判定规则只有一条：<code>计划日 &lt; 今天 且 未完成</code> 即为逾期。逾期条目会：</p>
+      <ul>
+        <li>标题下出现红色 <strong>逾期</strong> 小标记，并显示计划日 <code>MM-DD</code>；</li>
+        <li>在本列里排到最前（列头同时显示「N 逾期」）；</li>
+        <li>在小窗的合并列表里同样排在前面。</li>
+      </ul>
+      <div class="note warn"><b>计划日不做隐藏</b>它只影响排序与高亮，不会把任何条目从看板上摘掉。今天做不完的事仍然看得见，这是刻意的。</div>
+    </article>
+
+    <article class="doc-chapter" id="paste">
+      <h2>粘贴与拖入截图</h2>
+      <p>微信、QQ 里截好图，直接到卡片的「记录」框里 <code>Ctrl+V</code>：</p>
+      <ul>
+        <li>剪贴板里<strong>是图片</strong> → 落盘成附件，出现在下方截图墙，正文不受影响。</li>
+        <li>剪贴板里<strong>是文字</strong> → 照常粘贴成文本，不需要切换任何模式。</li>
+        <li>也可以把图片文件从资源管理器<strong>拖进「记录」框</strong>；原文件不会被移动或改名，应用拷一份自己的副本。</li>
+      </ul>
+      <h3>存储与去重</h3>
+      <ul>
+        <li>附件按 <code>attachments\YYYY\MM\&lt;内容哈希前 8 位&gt;.png</code> 落盘，库里只存相对路径。</li>
+        <li>同一张图重复粘贴只存一份；两张不同的图各自独立。</li>
+        <li>长边超过 2000 像素会自动缩放（微信 4K 截图通常几 MB，缩放后仍然读得清）。</li>
+        <li>截图墙里点 <strong>所在文件夹</strong> 可直接在资源管理器里定位这张图。</li>
+      </ul>
+    </article>
+
+    <article class="doc-chapter" id="crop">
+      <h2>灯箱与局部裁剪</h2>
+      <ol class="steps">
+        <li>点截图墙里的缩略图，进入灯箱（大图）。</li>
+        <li>底部显示这条记录的标题与原图尺寸，旁边是 <strong>所在文件夹</strong> 与 <strong>裁剪这一块</strong>。</li>
+        <li>点「裁剪这一块」→ 拖动选区框住你要留的段落，用「放大」滑杆调整倍率。</li>
+        <li>点 <strong>存为新截图</strong>：裁出来的图作为一条新附件出现在截图墙上，<strong>原图那张保留不动</strong>，并记着自己是从哪张图裁的。</li>
+        <li>按 <kbd>Esc</kbd> 或点空白处退出灯箱。</li>
+      </ol>
+      <div class="pair" style="margin-top:22px">
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/lightbox.png" alt="灯箱里的聊天截图大图与底部操作条" width="1320" height="860">
+          </div>
+          <figcaption>灯箱：底部是标题、原图尺寸、「所在文件夹」与「裁剪这一块」。</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img loading="lazy" decoding="async" src="media/crop.png" alt="灯箱内的裁剪状态：网格选区、放大滑杆、存为新截图" width="1320" height="860">
+          </div>
+          <figcaption>裁剪状态：网格选区 + 放大滑杆 + 「存为新截图」。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="doc-chapter" id="search">
+      <h2>全文检索</h2>
+      <p>操作栏的检索框是中文可用的即时过滤：</p>
+      <ul>
+        <li><strong>空格分词，词与词是 AND</strong>：输入「导出 csv」= 同时命中两个词才显示。</li>
+        <li>命中范围：标题、正文、标签名。</li>
+        <li>不区分大小写；输入即时生效，无需回车。</li>
+        <li>按 <kbd>Esc</kbd> 一键清空检索条件。</li>
+      </ul>
+      <p>检索只影响「看得见哪些」，不影响数据本身；被过滤掉的条目依然存在于各自的泳道里。清空检索即恢复全量。</p>
+      <div class="note"><b>为什么不是模糊搜索</b>检索是内存里的分词与匹配，不建索引、不装分词器。代价是它不做拼音、错别字纠正；好处是它零依赖、零维护，也不会有索引和实际数据不一致的问题。</div>
+    </article>
+
+    <article class="doc-chapter" id="tags">
+      <h2>标签与项目分类</h2>
+      <ol class="steps">
+        <li>点开卡片，在「标签」框里输入标签名，回车即建即挂，标签行当场多出这个 chip。</li>
+        <li>同名标签自动复用，颜色由标签自己带着，卡片、chips、小窗色块三处一致。</li>
+        <li>标签行上点某个 chip 即按它过滤；多点几个是 AND（同时具备才显示）。</li>
+        <li>要摘掉：卡片详情里点标签上的 ×。摘掉最后一个使用者时，这个标签跟着被清掉，标签行同步消失。</li>
+      </ol>
+      <p>标签适合当「项目 / 客户 / 模块」用：一个进行中的项目一个标签，回头按它过滤就是这个项目当前所有待办，再配合导出就能直接贴进周报。</p>
+    </article>
+
+    <article class="doc-chapter" id="export">
+      <h2>导出 Markdown / CSV</h2>
+      <ol class="steps">
+        <li>点操作栏齿轮 → 设置弹窗 → <strong>导出</strong> 分区。</li>
+        <li>选「导出为 Markdown 文档」或「导出为 CSV 表格」，在保存对话框里选位置。</li>
+        <li>默认文件名是 <code>工作计划-YYYY-MM-DD.md</code> / <code>.csv</code>；导出成功后看板顶部会提示落盘路径。</li>
+      </ol>
+      <h3>两种格式的区别</h3>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">格式</th>
+            <th scope="col">内容与用途</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>Markdown</td>
+          <td>三档按 加急 → 今天 → 以后 分节；完成项写成 <code>- [x]</code>；正文缩进在条目下；截图以 <code>![](attachments/…)</code> 相对路径引用。适合进仓库、贴文档、写周报。</td>
+        </tr>
+        <tr>
+          <td>CSV</td>
+          <td>8 列（标题、正文、档位、计划日、状态、标签、截图数、更新时间），带 BOM，Excel 打开中文不乱码；正文里的逗号、换行、引号都按 RFC 4180 转义。适合二次统计。</td>
+        </tr>
+      </table>
+      <div class="note"><b>导出的是过滤结果</b>先清掉检索框和标签过滤，导出的才是全量。</div>
+    </article>
+
+    <article class="doc-chapter" id="mini">
+      <h2>置顶小窗模式</h2>
+      <p>点操作栏分段控件的「小窗」，主窗隐藏，换成一个 <strong>420×560 的独立无边框窗口</strong>：始终置顶（别的窗口盖不住它），不占任务栏，Win11 下带圆角。</p>
+      <ul>
+        <li>三条泳道合并成<strong>一条列表</strong>，顺序仍是加急 → 今天 → 以后，档内沿用看板里的顺序，逾期在前、完成沉底。</li>
+        <li>每条左侧是档位色条 + 小色块：加急红、今天蓝、以后灰。</li>
+        <li>默认只显示内容条。<strong>鼠标移入</strong>才展开标题、三档计数、检索框和视图切换；移出即收起。正在检索时（焦点在输入框）不会收起。</li>
+        <li>勾复选框直接完成；点标题回到三列看板并自动打开这条详情，数据当场重拉。</li>
+        <li>移动窗口：抓<strong>顶边那条窄把手</strong>。</li>
+      </ul>
+      <div class="note"><b>小窗和看板不会同时存在</b>小窗开着时点托盘图标、或再次双击 exe，都会回到看板而不是冒出第二个小窗（应用是单实例的）。</div>
+      <figure style="margin-top:22px;max-width:420px">
+        <div class="shot">
+          <img loading="lazy" decoding="async" src="media/mini.png" alt="展开工具层的小窗" width="840" height="1120">
+        </div>
+        <figcaption>移入后的样子：逾期计数、检索框、看板 / 小窗切换都在。</figcaption>
+      </figure>
+    </article>
+
+    <article class="doc-chapter" id="menu">
+      <h2>菜单条与快捷键</h2>
+      <p>菜单长在标题栏上：<strong>文件 / 编辑 / 视图 / 帮助</strong>。点字打开，打开后横向移到别的项直接切换，<kbd>Esc</kbd> 或点窗口外关闭。</p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">菜单</th>
+            <th scope="col">项</th>
+            <th scope="col">快捷键</th>
+          </tr>
+        </thead>
+        <tr><td rowspan="2">文件</td><td>最小化到托盘</td><td><kbd>Ctrl</kbd> + <kbd>M</kbd></td></tr>
+        <tr><td>退出工作计划</td><td><kbd>Ctrl</kbd> + <kbd>Q</kbd></td></tr>
+        <tr><td rowspan="4">编辑</td><td>撤销 / 重做</td><td><kbd>Ctrl</kbd> + <kbd>Z</kbd> / <kbd>Ctrl</kbd> + <kbd>Y</kbd></td></tr>
+        <tr><td>剪切 / 复制 / 粘贴</td><td><kbd>Ctrl</kbd> + <kbd>X</kbd> / <kbd>C</kbd> / <kbd>V</kbd></td></tr>
+        <tr><td>全选</td><td><kbd>Ctrl</kbd> + <kbd>A</kbd></td></tr>
+        <tr><td>粘贴聊天截图</td><td>焦点在「记录」框时 <kbd>Ctrl</kbd> + <kbd>V</kbd></td></tr>
+        <tr><td rowspan="4">视图</td><td>重新加载 / 强制重新加载</td><td><kbd>Ctrl</kbd> + <kbd>R</kbd> / <kbd>F5</kbd></td></tr>
+        <tr><td>实际大小 / 放大 / 缩小</td><td><kbd>Ctrl</kbd> + <kbd>0</kbd> / <kbd>=</kbd> / <kbd>-</kbd></td></tr>
+        <tr><td>开发者工具</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>、<kbd>F12</kbd></td></tr>
+        <tr><td>全屏</td><td><kbd>F11</kbd></td></tr>
+        <tr><td>帮助</td><td>关于工作计划</td><td>—（打开设置弹窗的「关于」分区）</td></tr>
+      </table>
+      <p>输入框里另有两处 <kbd>Esc</kbd>：检索框里清空检索条件，灯箱里退出大图。</p>
+    </article>
+
+    <article class="doc-chapter" id="theme">
+      <h2>明暗主题与托盘</h2>
+      <ul>
+        <li>主题<strong>跟随系统</strong>：Windows 切深色，整个界面（含小窗、设置弹窗、原生日期控件）一致翻转。应用里没有手动主题开关，这是刻意的——少一个会和你系统设置打架的开关。</li>
+        <li>点标题栏的 <strong>关闭</strong> 或按 <kbd>Ctrl</kbd> + <kbd>M</kbd>：窗口收进系统托盘，程序不退出；点托盘图标唤回，托盘菜单「退出」才真的退出。</li>
+        <li>界面与托盘文案固定为简体中文，不随系统语言漂移；英文系统上也不会冒出 File / Edit / View。</li>
+      </ul>
+    </article>
+
+    <article class="doc-chapter" id="data">
+      <h2>数据位置、备份与迁移</h2>
+      <p>所有东西都在一个目录里：<code>%APPDATA%\work-plan</code>（即 <code>C:\Users\&lt;你&gt;\AppData\Roaming\work-plan</code>）。</p>
+      <pre>work-plan\
+  workplan.db        SQLite 库：条目、标签、附件索引、排序号
+  attachments\
+    2026\10\*.png    截图按年月落盘，库里只存相对路径
+  backups\
+    workplan-*.db    每次启动自动备份，只保留最近 5 份
+  工作计划-*.md/.csv 导出的默认落点</pre>
+      <h3>备份与恢复</h3>
+      <ul>
+        <li>每次启动先做一次完整性检查，通过才备份，然后继续启动。</li>
+        <li>想回滚：退出应用，把 <code>backups\</code> 里某份复制成 <code>workplan.db</code> 覆盖即可（顺手把旧的 <code>workplan.db-wal</code> 一起删掉更干净）。</li>
+      </ul>
+      <h3>迁移到新机器</h3>
+      <ol class="steps">
+        <li>退出旧机器上的应用（托盘菜单「退出」）。</li>
+        <li>整个 <code>work-plan</code> 文件夹拷到新机器同一路径下。</li>
+        <li>在新机器上运行一次 exe，勾上「开机自启」（如果需要）。</li>
+      </ol>
+      <div class="note"><b>为什么截图单独放目录</b>库里只存相对路径，所以整个文件夹可以随便搬，不会出现「数据库里的绝对路径换台机器就全断」的问题。也方便你直接把 <code>attachments</code> 挂进网盘或仓库。</div>
+    </article>
+
+    <article class="doc-chapter" id="faq">
+      <h2>常见问题</h2>
+      <h3>双击 exe 没反应 / 第一次特别慢</h3>
+      <p>portable 版第一次运行要把自身解包到临时目录，几秒到十几秒属正常。若被 SmartScreen 拦下，点「仍要运行」。已经有一个实例在跑时，再次双击只会把已有窗口唤回，不会开第二个。</p>
+      <h3>粘贴截图没反应</h3>
+      <p>先确认焦点在卡片的「记录」框里（不在正文框里的 <kbd>Ctrl</kbd> + <kbd>V</kbd> 只会当文字粘贴）。剪贴板里没有图片时，应用会提示「剪贴板里没有图片，按文字粘贴处理」，这是预期行为——它不要求你切换模式。</p>
+      <h3>条目不见了</h3>
+      <p>先看检索框和标签 chips 是否有残留过滤条件（检索框里按 <kbd>Esc</kbd> 清空）。计划日过期不会隐藏条目，只会让它标红排前；完成只会让它沉到本列底部，不会消失。</p>
+      <h3>小窗移入时以前会抖，现在呢</h3>
+      <p>抖动的根因是整窗都是拖拽热区，鼠标移动被系统吞掉，展开时机飘在半路；同时展开会把列表整体下移。现在拖拽热区只剩顶边一条固定把手，滚动条槽也常留，展开只发生一次位移，不再抖。</p>
+      <h3>能不能多人协作 / 手机上看</h3>
+      <p>不能，也不打算做。它是单人、单机、离线的工具。要给别人看就用导出 md / csv。</p>
+      <div class="pager">
+        <a href="#intro"><span>回到开头</span>它是什么，怎么想这件事</a>
+        <a href="index.html"><span>回到首页</span>产品介绍与下载</a>
+      </div>
+    </article>
+
+  </main>
+
+  <nav class="doc-toc" aria-label="本页目录">
+    <h2 class="grp">本页目录</h2>
+    <div id="docToc"></div>
+  </nav>
+
+</div>
+
+<footer class="site">
+  <span>工作计划 v0.1.0 · 纯本地离线，数据在 <code>%APPDATA%\work-plan</code></span>
+  <nav aria-label="页脚">
+    <a href="index.html">产品首页</a>
+    <a href="index.html#data">数据与隐私</a>
+    <a href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe" download>下载</a>
+  </nav>
+  <span>© zt178</span>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

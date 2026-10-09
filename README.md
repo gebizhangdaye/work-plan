@@ -2,6 +2,8 @@
 
 单人本机使用的工作计划看板：加急 / 今天 / 以后三档泳道，可勾选完成、写文字记录、直接贴聊天截图。纯本地离线，无账号、无同步、无网络请求。
 
+官网：https://gebizhangdaye.github.io/work-plan/ （由本仓库 `site/` 经 GitHub Actions 发布）
+
 ## 跑起来
 
 ```powershell
@@ -120,7 +122,7 @@ node scripts/probe-mac-assets.mjs                                             # 
 
 安装包不进 git：单文件 97 MB，GitHub 对 >50 MB 报警、>100 MB 直接拒推，而且一旦提交就永久留在历史里，仓库再也瘦不回 2 MB。所以 `release/` 与 `site/download/` 都在 `.gitignore` 里，**二进制只放 Releases**。
 
-产物名不带版本号（`electron-builder.yml` 里 `artifactName: workplan-win-${arch}.exe`），这样官网按钮可以用一条永久有效的直链：`<仓库地址>/releases/latest/download/workplan-win-x64.exe`。代价是文件名看不出版本 —— 版本在 Release 标题、应用内「关于」和 `product version` 里。带 `${version}` 的话每发一版都得回来改 HTML。
+产物名不带版本号（`electron-builder.yml` 里 `artifactName: workplan-win-${arch}.exe`），这样官网按钮可以用一条永久有效的直链：`https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe`。代价是文件名看不出版本 —— 版本在 Release 标题、应用内「关于」和 `product version` 里。带 `${version}` 的话每发一版都得回来改 HTML。
 
 发版两步：
 

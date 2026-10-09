@@ -63,7 +63,7 @@ const HTML = `<!doctype html>
     </div>
     <p class="tagline">加急、今天、以后 —— 把一天要干的事摊在三条泳道上。文字记不下，就把聊天截图直接贴进那条记录。</p>
     <div class="lanes"><i></i><i></i><i></i></div>
-    <p class="meta">Windows · macOS &nbsp;·&nbsp; 完全离线，无账号无同步 &nbsp;·&nbsp; Electron + React</p>
+    <p class="meta">Windows 10 / 11 x64 &nbsp;·&nbsp; 完全离线，无账号无同步 &nbsp;·&nbsp; Electron + React</p>
   </div>
   <div class="shot"><img id="board" src="../media/board.png" alt="工作计划看板界面"></div>
 </body>

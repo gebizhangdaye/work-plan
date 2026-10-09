@@ -1,7 +1,7 @@
 {
   "name": "work-plan",
   "productName": "工作计划",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "本地工作计划看板：加急/今天/以后三档泳道，支持文字记录与聊天截图粘贴（Windows portable / macOS dmg+zip）",
   "main": "out/main/index.js",
   "author": "zt178",

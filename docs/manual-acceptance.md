@@ -107,6 +107,10 @@
 - [ ] 点分段「看板」后窗口回到原来的尺寸与位置（实测 1320×860 @ 60,26 精确还原）
 - [ ] 小窗里**没有**最小化/收起入口（按需求去掉）：要收起来先点「看板」回大窗，再 `Ctrl+M` 或点托盘
 - [ ] 小窗开着时点托盘图标或再次双击 exe，回到看板而不是冒出第二个小窗
+- [ ] **（0.1.1）** 拖左 / 右 / 下三条边与下角能改宽高；**顶边拖不动尺寸是有意的** —— 那 12px 是 `.mini-grab` 移动把手，drag 区优先于 resize 命中区
+- [ ] **（0.1.1）** 缩到 300×320 就缩不动；此时标题行不被裁字，且工具层展开的状态下列表仍看得到约 4 行（离屏实测 199px）
+- [ ] **（0.1.1）** 拉到 600 宽以上：行标题不横向溢出、三档计数 chips 不挤成两行、列表跟着变宽不留空洞
+- [ ] **（0.1.1）** 关掉小窗再打开，回到默认 420×560 —— 尺寸与视图模式一样都不持久化
 
 ## 12. 视觉与可访问性（Fluent）
 
@@ -175,5 +179,5 @@
 - [ ] 微信/钉钉截图后 `⌘⌃⇧4` 之类截一张，回到条目 `⌘V`：**截图进得来**（Mac 的截图贴板主要是 TIFF，代码里 `IMAGE_TYPES` 已经带 `image/tiff`，剩下要验的是 `nativeImage.createFromBuffer` 能不能解）；解不出来就在 `clipboardIngest.ts` 里打一行 `entry.types` 看真实 MIME 串
 - [ ] 拖本地图片进条目、裁剪、`打开所在文件夹`（走 `shell.showItemInFolder`）、导出 CSV 用 Numbers/Excel for Mac 打开不乱码
 - [ ] Finder / Dock / `⌘Tab` 里的图标是这份包自带的 `icon.icns`，不是通用白纸图标
-- [ ] 首次双击未签名的 `工作计划 0.1.0 arm64.dmg`：预期被 Gatekeeper 拦。放行两条路任选——`xattr -dr com.apple.quarantine "/Applications/工作计划.app"`，或 系统设置 → 隐私与安全性 → 仍要打开（Sequoia 起右键「打开」那一套已经不灵了）
+- [ ] 首次双击未签名的 `workplan-mac-arm64.dmg`：预期被 Gatekeeper 拦。放行两条路任选——`xattr -dr com.apple.quarantine "/Applications/工作计划.app"`，或 系统设置 → 隐私与安全性 → 仍要打开（Sequoia 起右键「打开」那一套已经不灵了）
 - [ ] `arm64` 包装到 Apple Silicon、`x64` 包装到 Intel 机器各自能起（没有 universal 包：npmmirror 上 `darwin-universal.zip` 是 404）

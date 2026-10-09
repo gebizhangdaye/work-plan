@@ -261,13 +261,13 @@
 
     <article class="doc-chapter" id="mini">
       <h2>置顶小窗模式</h2>
-      <p>点操作栏分段控件的「小窗」，主窗隐藏，换成一个 <strong>420×560 的独立无边框窗口</strong>：始终置顶（别的窗口盖不住它），不占任务栏，Win11 下带圆角。</p>
+      <p>点操作栏分段控件的「小窗」，主窗隐藏，换成一个 <strong>默认 420×560、可拖边改大小的独立无边框窗口</strong>：始终置顶（别的窗口盖不住它），不占任务栏，Win11 下带圆角。</p>
       <ul>
         <li>三条泳道合并成<strong>一条列表</strong>，顺序仍是加急 → 今天 → 以后，档内沿用看板里的顺序，逾期在前、完成沉底。</li>
         <li>每条左侧是档位色条 + 小色块：加急红、今天蓝、以后灰。</li>
         <li>默认只显示内容条。<strong>鼠标移入</strong>才展开标题、三档计数、检索框和视图切换；移出即收起。正在检索时（焦点在输入框）不会收起。</li>
         <li>勾复选框直接完成；点标题回到三列看板并自动打开这条详情，数据当场重拉。</li>
-        <li>移动窗口：抓<strong>顶边那条窄把手</strong>。</li>
+        <li>移动窗口：抓<strong>顶边那条窄把手</strong>。改大小：抓<strong>左 / 右 / 下三条边与下角</strong>；下限是 300×320，到不了更小（再窄标题行会被裁、再矮列表就只剩两行）。</li>
       </ul>
       <div class="note"><b>小窗和看板不会同时存在</b>小窗开着时点托盘图标、或再次双击 exe，都会回到看板而不是冒出第二个小窗（应用是单实例的）。</div>
       <figure style="margin-top:22px;max-width:420px">
@@ -365,7 +365,7 @@
 </div>
 
 <footer class="site">
-  <span>工作计划 v0.1.0 · 纯本地离线，数据在 <code>%APPDATA%\work-plan</code></span>
+  <span>工作计划 v0.1.1 · 纯本地离线，数据在 <code>%APPDATA%\work-plan</code></span>
   <nav aria-label="页脚">
     <a href="index.html">产品首页</a>
     <a href="index.html#data">数据与隐私</a>

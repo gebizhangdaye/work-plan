@@ -66,7 +66,7 @@ backups\workplan-<时间戳>.db  每次启动自动备份，保留最近 5 份
   - 两边的快捷键标签与 mac accelerator 同源于 `src/shared/menuShortcuts.ts`（标题栏 `<kbd>` 显示的和原生菜单注册的就是同一串），`Ctrl+…` / `⌘…` 按 `isMac` 取；`isMac` 由 preload 同步暴露，不走 IPC，避免首屏按错左内边距闪一下
   - 「关闭」是收进托盘不是退出；要真退出走托盘菜单、`Ctrl+Q`（mac 是 `⌘Q`）或设置弹窗「关于 → 退出工作计划」。mac 上红钮发的也是同一个 `close` 事件，所以直接被拦成收进托盘，Dock 图标点下去靠 `app.on('activate')` 唤回
 - **设置弹窗**：齿轮开一个居中模态，左侧菜单分三区——导出 / 数据与运行 / 关于；`Esc` 或点遮罩关闭。标题栏「帮助 → 关于工作计划」直接跳到关于分区。
-- **小窗置顶**：分段控件「小窗」打开一个**独立的无边框窗口**（420×560、Win11 圆角、置顶、不进任务栏），主窗同时隐藏。不复用主窗的原因：Electron 的 `frame` 只能在创建时决定，靠"缩小主窗口"做小窗永远甩不掉系统标题栏。
+- **小窗置顶**：分段控件「小窗」打开一个**独立的无边框窗口**（默认 420×560、可拖边改大小、下限 300×320、Win11 圆角、置顶、不进任务栏），主窗同时隐藏。不复用主窗的原因：Electron 的 `frame` 只能在创建时决定，靠"缩小主窗口"做小窗永远甩不掉系统标题栏。
   - 默认**只有内容条**：标题栏、三档计数、搜索框、视图分段控件全收起；鼠标移入或焦点落在搜索框时才展开（`:hover` + `:focus-within`，不走 React 状态）
   - 可拖：只有**顶部 12px 那条静态把手**是 `-webkit-app-region: drag`。整窗挂 drag 会让系统吞掉 mousemove，`:hover` 只在指针压到 `no-drag` 元素那一刻才刷新，展开时机就飘在鼠标移动途中（真机 A/B 实测），看着就是抖动
   - 列表 `scrollbar-gutter: stable` 常留滚动条槽：工具层展开后可视高度少 120px，7~8 条时滚动条会中途冒出来把整行挤窄 15px（离屏实测 `deltaRowWidth: -15px`）
@@ -143,7 +143,7 @@ node scripts/probe-mac-assets.mjs                                             # 
 npm run dist        # 产出 release\workplan-win-x64.exe
 ```
 
-再在仓库的 Releases 页面建一个 tag（如 `v0.1.0`），把那个 exe 拖成附件。未签名，用户首跑仍会见到 SmartScreen，放行说明在 `docs/manual-acceptance.md`。
+再在仓库的 Releases 页面建一个 tag（就是版本号本身，如 `0.1.1`，不加 `v` 前缀），把那个 exe 拖成附件。未签名，用户首跑仍会见到 SmartScreen，放行说明在 `docs/manual-acceptance.md`。
 
 官网 `site/` 是纯静态、零构建，由 `.github/workflows/deploy-site.yml` 在推 `main` 时用官方 `upload-pages-artifact` / `deploy-pages` 发布到 GitHub Pages（公开仓库免费，且这条 CI 不跑 npm、不需要装依赖）。首次要在 Settings → Pages 把 Source 从默认改成 **GitHub Actions**，之后每次推 `main` 自动更新。
 
@@ -151,7 +151,7 @@ npm run dist        # 产出 release\workplan-win-x64.exe
 
 - 开机自启：Windows 写当前用户的 Run 键，portable exe 换存放位置后旧路径失效，需重新勾一次；macOS 走登录项且 `setLoginItemSettings` 只认 `openAtLogin`（挂的就是当前这个 `.app`，挪动或改名后要重勾），未签名 ad-hoc 包不保证挂得上。
 - macOS 上「红绿灯 + 自绘标题栏」的几何（`{x:12,y:13}` 与 `.titlebar-mac` 的 78px）是从 40px 条和 12px 内边距**推**出来的，没在真机上量过；整条 `-webkit-app-region: drag` 也有可能吃掉红绿灯的点击，这两条只能在 Mac 上验（`docs/manual-acceptance.md` §14）。
-- 小窗/三列的切换状态不持久化：重启程序回到三列模式。
+- 小窗/三列的切换状态不持久化：重启程序回到三列模式。小窗被拖成的尺寸同样不持久化，下次打开回到 420×560。
 - 开发态控制台会打 Electron 的 `Insecure Content-Security-Policy` 安全提示：这是 dev 提示，打包后不出现。没有加 CSP meta 是**故意的**——`script-src 'self'` 会挡掉 Vite dev 注入的内联 fast-refresh 前导脚本，会弄坏 `npm run dev`；真要加 CSP 得区分 dev/prod 两套 HTML，属后续项。
 - 渲染层已关闭拼写检查；`contextIsolation` + `sandbox` + `nodeIntegration: false` 都在。
 - 搜索用内存分词匹配而不是 SQLite FTS5：FTS5 虽已编译进来，但默认 unicode61 分词器不切中文，对本项目的中文搜索反而更差；数据量千级时全量载入内存过滤更快也更准。

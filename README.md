@@ -1,8 +1,21 @@
+<p align="center">
+  <img src="site/media/hero.png" width="1280" alt="工作计划 · 加急 / 今天 / 以后三条泳道的本地待办看板">
+</p>
+
+<p align="center">
+  <a href="https://github.com/gebizhangdaye/work-plan/releases/latest"><img src="https://img.shields.io/github/v/release/gebizhangdaye/work-plan?style=flat-square&color=0B5CAB" alt="最新版本"></a>
+  <a href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe"><img src="https://img.shields.io/github/downloads/gebizhangdaye/work-plan/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD&color=5D5D5D" alt="下载次数"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/gebizhangdaye/work-plan?style=flat-square&color=0F7B3F" alt="MIT 许可"></a>
+  <img src="https://img.shields.io/badge/%E5%B9%B3%E5%8F%B0-Windows%20%C2%B7%20macOS-6F6F6F?style=flat-square" alt="支持平台">
+  <img src="https://img.shields.io/badge/%E8%81%94%E7%BD%91%E8%AF%B7%E6%B1%82-0-0F7B3F?style=flat-square" alt="零联网请求">
+  <a href="https://gebizhangdaye.github.io/work-plan/"><img src="https://img.shields.io/badge/%E5%AE%98%E7%BD%91-%E5%9C%A8%E7%BA%BF-4DA3E8?style=flat-square" alt="官网"></a>
+</p>
+
 # 工作计划（Windows / macOS 桌面版）
 
 单人本机使用的工作计划看板：加急 / 今天 / 以后三档泳道，可勾选完成、写文字记录、直接贴聊天截图。纯本地离线，无账号、无同步、无网络请求。
 
-官网：https://gebizhangdaye.github.io/work-plan/ （由本仓库 `site/` 经 GitHub Actions 发布）
+**下载免安装版**：[workplan-win-x64.exe](https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe)（约 97 MB，Win10 / 11 x64，双击即用）· [Releases](https://github.com/gebizhangdaye/work-plan/releases) · [使用教程](https://gebizhangdaye.github.io/work-plan/docs.html) · 官网 [gebizhangdaye.github.io/work-plan](https://gebizhangdaye.github.io/work-plan/)
 
 ## 跑起来
 
@@ -144,3 +157,11 @@ npm run dist        # 产出 release\workplan-win-x64.exe
 - 搜索用内存分词匹配而不是 SQLite FTS5：FTS5 虽已编译进来，但默认 unicode61 分词器不切中文，对本项目的中文搜索反而更差；数据量千级时全量载入内存过滤更快也更准。
 - 删除没有二次确认；误删靠 `backups\` 里的库快照 + 附件文件仍在磁盘上找回。
 - 裁剪出的新图与来源图都保留，不做「删除原图」。
+
+## 许可
+
+MIT © [zt178](https://github.com/gebizhangdaye) —— 详见 [LICENSE](LICENSE)。
+
+## 反馈
+
+[GitHub Issues](https://github.com/gebizhangdaye/work-plan/issues)。数据全在本机 `%APPDATA%\work-plan`，带上这个目录复现最快 —— 但里面是你的真实待办和截图，传之前先自己过一眼。

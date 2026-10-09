@@ -26,15 +26,70 @@ npm run check        # typecheck + lint + vitest + 三段构建
 npm run dist         # 产出 release\workplan-win-x64-0.1.1.exe（免安装 portable）
 ```
 
-```bash
-# macOS 包只能在 Mac 上出：.dmg 要 hdiutil、签名要 codesign，这两样 Windows 上都没有
-npm ci && npm run icons && node scripts/probe-mac-assets.mjs && node scripts/probe-builder-config.mjs && npm run check
-npm run dist:mac:arm64   # Apple Silicon；Intel 用 dist:mac:x64，两个都要就跑 dist:mac
-```
+Windows 上只装 Node（≥20.19）就能一路跑完；**macOS 的包必须在 Mac 上出**，见下一节。
 
-零原生模块（存储是 Electron 内置 `node:sqlite`），所以换平台不需要 node-gyp、不需要 `@electron/rebuild`。`icon.icns` 与 `trayTemplate*.png` 由 `npm run icons` 现生成，不走 electron-builder 那套要从 GitHub 下载的图标 toolset。macOS 产物是 ad-hoc 签名、**未公证**，首次打开会被 Gatekeeper 拦，放行办法写在 `docs/manual-acceptance.md` §14。
+零原生模块（存储是 Electron 内置 `node:sqlite`），所以换平台不需要 node-gyp、不需要 `@electron/rebuild`。
 
 双击 `release\workplan-win-x64-0.1.1.exe` 即可用，不需要管理员权限。未签名，首次运行 Windows 可能弹 SmartScreen「仍要运行」。
+
+## macOS：没有现成包，要自己构建
+
+**Releases 里只有 Windows 的 exe，没有 mac 包。** 原因是 `.dmg` 要用 macOS 自带的 `hdiutil`、签名要用 `codesign`，这两样在 Windows / Linux 上都不存在；在 Windows 主机上跑 `--mac`，electron-builder 会以 "skipped macOS application code signing" 跳过签名，顶多拼出一个未签名的 `.app` 目录，装到别的机器上也开不了。所以想要 Mac 版，只能找一台 Mac 自己出包。
+
+> 先说清楚：下面这套命令是照着 `electron-builder.yml` 的配置写的，**作者手边没有 Mac，从未在真机上完整跑通过**，`docs/manual-acceptance.md` §14 那十几项也全部没打过勾。跑通了或者卡住了都欢迎开 issue。
+
+### 前置
+
+- 一台 Mac（Apple Silicon 或 Intel 都行）
+- Node `^20.19.0 || >=22.12.0` —— 这是 Vite 7 与 electron-vite 5 的 `engines` 下限，开发时用的是 24.x
+- Xcode Command Line Tools（`codesign` 在这里）：`xcode-select -p || xcode-select --install`
+- **不需要**开发者账号、不需要完整 Xcode、不需要 Homebrew、不需要 node-gyp
+
+### 步骤
+
+```bash
+git clone https://github.com/gebizhangdaye/work-plan.git
+cd work-plan
+
+npm ci                      # 按 package-lock 装；Electron 二进制走 .npmrc 里的 npmmirror
+npm run check               # typecheck + lint + vitest + 三段构建；不绿就别往下走
+npm run dist:mac:arm64      # Apple Silicon 的机器跑这条
+```
+
+要另一个架构就换成 `npm run dist:mac:x64`（Intel）。注意 **`npm run dist:mac` 不等于"两个架构都出"**：不带 arch 时 electron-builder 只按当前机器的架构出一个包，所以两份产物要分两次跑。
+
+产物落在 `release/`：
+
+| 文件 | 用途 |
+|---|---|
+| `workplan-mac-arm64-<版本>.dmg` | 打开后把应用拖进 Applications |
+| `workplan-mac-arm64-<版本>.zip` | 解压即得 `.app`，适合直接分发 |
+
+图标不需要额外操作：`resources/icon.icns` 与 `trayTemplate*.png` **已经提交进仓库**，克隆下来就能直接打包。只有改了 `resources/icon.png` 才需要重跑 `npm run icons` 重新生成它们（这条路径是为了绕开 electron-builder 那套要从 GitHub 下载的图标 toolset）。
+
+打包前想做自查，跑这两条（都是只读校验，不出包）：
+
+```bash
+node scripts/probe-mac-assets.mjs        # 核对 icon.icns 的条目表与 trayTemplate 的 alpha 是否真带软边
+node scripts/probe-builder-config.mjs    # 核对 yml 能解析、mac 段每个键都在已装 electron-builder 的类型声明里真实存在
+```
+
+### 首次打开会被 Gatekeeper 拦，这是预期行为
+
+包是 **ad-hoc 签名、未公证**（`mac.identity: '-'`，既不买开发者账号也不做 notarization）。放行两条路任选：
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/工作计划.app"
+```
+
+或在 **系统设置 → 隐私与安全性** 里点「仍要打开」（Sequoia 起，右键 → 打开 那一套已经不灵了）。
+
+### mac 上已知的限制
+
+- 没有 universal 包，arm64 与 x64 各出各的。
+- 「红绿灯 + 自绘标题栏」的几何（`{x:12,y:13}` 与 `.titlebar-mac` 的 78px）是**推**出来的，没在真机上量过；整条 `-webkit-app-region: drag` 也有可能吃掉红绿灯的点击。
+- 开机自启走登录项，`setLoginItemSettings` 只认当前这个 `.app`，挪动或改名后要重新勾；ad-hoc 签名的包不保证挂得上。
+- 数据目录是 `~/Library/Application Support/work-plan/`，与 Windows 的 `%APPDATA%\work-plan` 同构，库文件和 `attachments/` 两边可以直接拷。
 
 ## 数据在哪
 
@@ -149,8 +204,7 @@ npm run check && npm run dist   # 门禁（typecheck+lint+test+三段构建）�
 
 ## 已知边界
 
-- 开机自启：Windows 写当前用户的 Run 键，portable exe 换存放位置后旧路径失效，需重新勾一次；macOS 走登录项且 `setLoginItemSettings` 只认 `openAtLogin`（挂的就是当前这个 `.app`，挪动或改名后要重勾），未签名 ad-hoc 包不保证挂得上。
-- macOS 上「红绿灯 + 自绘标题栏」的几何（`{x:12,y:13}` 与 `.titlebar-mac` 的 78px）是从 40px 条和 12px 内边距**推**出来的，没在真机上量过；整条 `-webkit-app-region: drag` 也有可能吃掉红绿灯的点击，这两条只能在 Mac 上验（`docs/manual-acceptance.md` §14）。
+- 开机自启：Windows 写当前用户的 Run 键，portable exe 换存放位置后旧路径失效，需重新勾一次；macOS 侧的限制集中在「macOS：没有现成包，要自己构建」那节的清单里（红绿灯几何未实测、ad-hoc 包不保证挂得上登录项）。
 - 小窗/三列的切换状态不持久化：重启程序回到三列模式。小窗被拖成的尺寸同样不持久化，下次打开回到 420×560。
 - 开发态控制台会打 Electron 的 `Insecure Content-Security-Policy` 安全提示：这是 dev 提示，打包后不出现。没有加 CSP meta 是**故意的**——`script-src 'self'` 会挡掉 Vite dev 注入的内联 fast-refresh 前导脚本，会弄坏 `npm run dev`；真要加 CSP 得区分 dev/prod 两套 HTML，属后续项。
 - 渲染层已关闭拼写检查；`contextIsolation` + `sandbox` + `nodeIntegration: false` 都在。

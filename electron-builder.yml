@@ -47,12 +47,12 @@ mac:
   target:
     - dmg
     - zip
-  # 文件名保持 ASCII 且不带版本号：Releases 的 releases/latest/download/<名字> 是稳定直链，
-  # 带 ${version} 的话每发一版都得回来改官网按钮的 href。
-  artifactName: workplan-mac-${arch}.${ext}
+  # 文件名带版本号且保持 ASCII（CJK+空格会变成 %E5%B7%A5%E4%BD%9C... 那种 URL）。
+  # 代价：每发一版要回来改官网/README 里的下载 href，发版清单里有一条 grep 兜住。
+  artifactName: workplan-mac-${arch}-${version}.${ext}
 
 portable:
-  artifactName: workplan-win-${arch}.exe
+  artifactName: workplan-win-${arch}-${version}.exe
   unpackDirName: workplan-portable
   unicode: true
 

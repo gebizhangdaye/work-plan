@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/gebizhangdaye/work-plan/releases/latest"><img src="https://img.shields.io/github/v/release/gebizhangdaye/work-plan?style=flat-square&color=0B5CAB" alt="最新版本"></a>
-  <a href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe"><img src="https://img.shields.io/github/downloads/gebizhangdaye/work-plan/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD&color=5D5D5D" alt="下载次数"></a>
+  <a href="https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64-0.1.1.exe"><img src="https://img.shields.io/github/downloads/gebizhangdaye/work-plan/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD&color=5D5D5D" alt="下载次数"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/gebizhangdaye/work-plan?style=flat-square&color=0F7B3F" alt="MIT 许可"></a>
   <img src="https://img.shields.io/badge/%E5%B9%B3%E5%8F%B0-Windows%20%C2%B7%20macOS-6F6F6F?style=flat-square" alt="支持平台">
   <img src="https://img.shields.io/badge/%E8%81%94%E7%BD%91%E8%AF%B7%E6%B1%82-0-0F7B3F?style=flat-square" alt="零联网请求">
@@ -15,7 +15,7 @@
 
 单人本机使用的工作计划看板：加急 / 今天 / 以后三档泳道，可勾选完成、写文字记录、直接贴聊天截图。纯本地离线，无账号、无同步、无网络请求。
 
-**下载免安装版**：[workplan-win-x64.exe](https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe)（约 97 MB，Win10 / 11 x64，双击即用）· [Releases](https://github.com/gebizhangdaye/work-plan/releases) · [使用教程](https://gebizhangdaye.github.io/work-plan/docs.html) · 官网 [gebizhangdaye.github.io/work-plan](https://gebizhangdaye.github.io/work-plan/)
+**下载免安装版**：[workplan-win-x64-0.1.1.exe](https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64-0.1.1.exe)（约 97 MB，Win10 / 11 x64，双击即用）· [Releases](https://github.com/gebizhangdaye/work-plan/releases) · [使用教程](https://gebizhangdaye.github.io/work-plan/docs.html) · 官网 [gebizhangdaye.github.io/work-plan](https://gebizhangdaye.github.io/work-plan/)
 
 ## 跑起来
 
@@ -23,7 +23,7 @@
 npm install          # 已配 npmmirror；缺 electron 二进制时 postinstall 自动走镜像补
 npm run dev          # 开发（带热更新）
 npm run check        # typecheck + lint + vitest + 三段构建
-npm run dist         # 产出 release\workplan-win-x64.exe（免安装 portable）
+npm run dist         # 产出 release\workplan-win-x64-0.1.1.exe（免安装 portable）
 ```
 
 ```bash
@@ -34,7 +34,7 @@ npm run dist:mac:arm64   # Apple Silicon；Intel 用 dist:mac:x64，两个都要
 
 零原生模块（存储是 Electron 内置 `node:sqlite`），所以换平台不需要 node-gyp、不需要 `@electron/rebuild`。`icon.icns` 与 `trayTemplate*.png` 由 `npm run icons` 现生成，不走 electron-builder 那套要从 GitHub 下载的图标 toolset。macOS 产物是 ad-hoc 签名、**未公证**，首次打开会被 Gatekeeper 拦，放行办法写在 `docs/manual-acceptance.md` §14。
 
-双击 `release\workplan-win-x64.exe` 即可用，不需要管理员权限。未签名，首次运行 Windows 可能弹 SmartScreen「仍要运行」。
+双击 `release\workplan-win-x64-0.1.1.exe` 即可用，不需要管理员权限。未签名，首次运行 Windows 可能弹 SmartScreen「仍要运行」。
 
 ## 数据在哪
 
@@ -135,12 +135,12 @@ node scripts/probe-mac-assets.mjs                                             # 
 
 安装包不进 git：单文件 97 MB，GitHub 对 >50 MB 报警、>100 MB 直接拒推，而且一旦提交就永久留在历史里，仓库再也瘦不回 2 MB。所以 `release/` 与 `site/download/` 都在 `.gitignore` 里，**二进制只放 Releases**。
 
-产物名不带版本号（`electron-builder.yml` 里 `artifactName: workplan-win-${arch}.exe`），这样官网按钮可以用一条永久有效的直链：`https://github.com/gebizhangdaye/work-plan/releases/latest/download/workplan-win-x64.exe`。代价是文件名看不出版本 —— 版本在 Release 标题、应用内「关于」和 `product version` 里。带 `${version}` 的话每发一版都得回来改 HTML。
+产物名带版本号（`artifactName: workplan-win-${arch}-${version}.exe`，mac 是 `workplan-mac-${arch}-${version}.${ext}`），下载下来就认得出是哪一版。代价是每发一版都得回来改下载链接 —— 用这条命令揪漏网的：`grep -rn "workplan-win-x64-" README.md site docs`，剩下的每一处都应该是同一个新版本号。
 
 发版两步：
 
 ```powershell
-npm run dist        # 产出 release\workplan-win-x64.exe
+npm run check && npm run dist   # 门禁（typecheck+lint+test+三段构建）绿了才打包；用 && 不要用 ;
 ```
 
 再在仓库的 Releases 页面建一个 tag（就是版本号本身，如 `0.1.1`，不加 `v` 前缀），把那个 exe 拖成附件。未签名，用户首跑仍会见到 SmartScreen，放行说明在 `docs/manual-acceptance.md`。
